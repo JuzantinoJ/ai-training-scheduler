@@ -116,16 +116,16 @@ Phase 3
 
 # Author
 
-'''text
+```text
 Created by Juzantino Junadi
-'''
+```
 
 # Focused on:
 
-'''text
+```text
 AI automation
 cloud workflows
 operational systems
 agentic AI
 intelligent scheduling systems
-'''
+```

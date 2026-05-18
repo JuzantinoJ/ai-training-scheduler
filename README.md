@@ -1,148 +1,240 @@
-# AI Training Scheduler
+# n8n Setup on Mac
 
-AI-powered scheduling and coordination assistant using:
+Production-style local n8n development environment using:
 
-- Telegram Bot
-- n8n
-- OpenAI API
-- Google Calendar
+- Docker Compose
+- PostgreSQL
+- Redis
+- macOS (Apple Silicon / M1)
+- VSCode
+
+This repository documents the setup process, infrastructure configuration, and local development workflow for running n8n professionally on macOS.
 
 ---
 
 # Project Goal
 
-This project aims to automate training and rehearsal scheduling using AI workflows.
+This project aims to create a scalable and reproducible local n8n environment for:
 
-The system will:
+- AI workflow development
+- automation engineering
+- API integrations
+- webhook testing
+- client demonstrations
+- infrastructure experimentation
 
-- Collect participant availability
-- Analyse attendance percentages
-- Recommend optimal dates
-- Coordinate scheduling conflicts
-- Create Google Calendar events
-- Send automated confirmations and reminders
+The setup is designed to mimic a lightweight production architecture while remaining fully local for development and testing.
 
 ---
 
-# Planned Stack
+# Technology Stack
 
-| Layer                | Technology                       |
-| -------------------- | -------------------------------- |
-| Messaging Platform   | Telegram                         |
-| Workflow Automation  | n8n                              |
-| AI Reasoning         | OpenAI GPT-4.1 Mini              |
-| Calendar Integration | Google Calendar API              |
-| Data Storage         | Airtable / Google Sheets         |
-| Hosting              | Docker / Railway / Local Machine |
+| Layer                   | Technology            |
+| ----------------------- | --------------------- |
+| Workflow Automation     | n8n                   |
+| Containerization        | Docker                |
+| Container Orchestration | Docker Compose        |
+| Database                | PostgreSQL 16         |
+| Queue / Cache           | Redis 7               |
+| Development Environment | VSCode                |
+| Runtime                 | Node.js 20 LTS        |
+| Operating System        | macOS (Apple Silicon) |
+
+---
+
+# Architecture
+
+```text
+macOS
+│
+├── Docker Desktop
+│
+├── n8n Container
+│
+├── PostgreSQL Container
+│
+├── Redis Container
+│
+└── Persistent Docker Volumes
+```
 
 ---
 
 # Project Structure
 
 ```text
-ai-training-scheduler/
+n8n-setup-mac/
+│
+├── docker/
+│   └── docker-compose.yml
 │
 ├── scripts/
-├── docs/
-├── workflows/
-├── prompts/
-├── diagrams/
+│   └── check-n8n-readiness.sh
+│
 ├── screenshots/
+│
+├── docs/
+│
+├── workflows/
+│
+├── diagrams/
+│
 └── README.md
-
-```
-
-# Pre-flight Check
-
-```text
-Before starting the project, run:
-./scripts/check-n8n-readiness.sh
-
-This checks whether your machine has the required tools installed:
-
-Git
-Node.js
-npm
-Docker
-VSCode CLI
-n8n
-
-Recommended Node.js Version
-This project is tested with:
-Node.js 20 LTS
-
-```
-
-# Getting Started
-
-```text
-Clone Repository
-git clone https://github.com/YOUR_USERNAME/ai-training-scheduler.git
-cd ai-training-scheduler
-
-Run Readiness Check
-./scripts/check-n8n-readiness.sh
-
-Start n8n
-npx n8n
-
-Then open:
-http://localhost:5678
-
-```
-
-# Roadmap
-
-Phase 1
-
-- Telegram Bot Integration
-- OpenAI API Integration
-- Attendance Collection
-- Availability Analysis
-
-Phase 2
-
-- Google Calendar Integration
-- Automated Scheduling
-- Reminder System
-- Conflict Resolution Logic
-
-Phase 3
-
-- Multi-agent workflows
-- Voice command scheduling
-- Analytics dashboard
-- WhatsApp integration
-
-# Author
-
-```text
-Created by Juzantino Junadi
-```
-
-# Focused on:
-
-```text
-AI automation
-cloud workflows
-operational systems
-agentic AI
-intelligent scheduling systems
 ```
 
 ---
 
-# Progress Tracker
+# Features
 
-## Initial n8n Setup Completed
+- Local n8n setup using Docker Compose
+- PostgreSQL database integration
+- Redis integration
+- Persistent Docker volume storage
+- macOS Apple Silicon support
+- Infrastructure documentation
+- GitHub version-controlled setup
+- Scalable local development environment
 
-### n8n Login Screen
+---
+
+# Pre-flight Check
+
+Before starting the project, run:
+
+```bash
+./scripts/check-n8n-readiness.sh
+```
+
+This verifies:
+
+- Git
+- Node.js
+- npm
+- Docker
+- VSCode CLI
+- n8n compatibility
+
+---
+
+# Recommended Requirements
+
+| Requirement    | Version                   |
+| -------------- | ------------------------- |
+| Node.js        | 20 LTS                    |
+| Docker Desktop | Latest                    |
+| macOS          | Apple Silicon recommended |
+| RAM            | 16GB recommended          |
+
+---
+
+# Getting Started
+
+## Clone Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/n8n-setup-mac.git
+cd n8n-setup-mac
+```
+
+---
+
+## Run Environment Check
+
+```bash
+./scripts/check-n8n-readiness.sh
+```
+
+---
+
+## Start Docker Infrastructure
+
+```bash
+docker compose -f docker/docker-compose.yml up -d
+```
+
+---
+
+## Verify Containers
+
+```bash
+docker ps
+```
+
+Expected containers:
+
+- ai-training-n8n
+- ai-training-postgres
+- ai-training-redis
+
+---
+
+## Open n8n
+
+```text
+http://localhost:5678
+```
+
+---
+
+## Stop Infrastructure
+
+```bash
+docker compose -f docker/docker-compose.yml down
+```
+
+---
+
+# Docker Services
+
+## PostgreSQL
+
+Used as the primary persistent database backend for n8n.
+
+Stores:
+
+- workflows
+- execution history
+- credentials
+- user data
+- settings
+
+---
+
+## Redis
+
+Prepared for queue-mode and scalable workflow execution.
+
+Used for:
+
+- queue handling
+- temporary memory
+- scalable execution architecture
+
+---
+
+## n8n
+
+Main workflow automation platform.
+
+Runs:
+
+- API workflows
+- webhook automations
+- AI integrations
+- scheduling systems
+- automation pipelines
+
+---
+
+# Screenshots
+
+## n8n Login Screen
 
 ![n8n Login](screenshots/n8n-login.png)
 
 ---
 
-### n8n Dashboard
+## n8n Dashboard
 
 ![n8n Dashboard](screenshots/n8n-dashboard.png)
 
@@ -150,12 +242,16 @@ intelligent scheduling systems
 
 # Current Progress
 
+## Core Environment Setup
+
 - [x] GitHub repository setup
 - [x] Local project structure created
+- [x] VSCode development environment configured
 - [x] Docker installed
 - [x] Node.js 20 installed
 - [x] n8n Docker image installed
-- [x] n8n running locally
+
+---
 
 ## Infrastructure Stack
 
@@ -166,18 +262,30 @@ intelligent scheduling systems
 - [x] n8n running locally with PostgreSQL backend
 - [x] Local development architecture established
 
-## AI Workflow Integration
+---
 
-- [ ] Telegram bot integration
-- [ ] OpenAI API integration
-- [ ] Google Calendar integration
-- [ ] AI scheduling workflow
-- [ ] Availability analysis engine
-- [ ] Automated scheduling confirmation system
+## Documentation & Version Control
 
-## Deployment & Scaling
+- [x] README documentation created
+- [x] Git workflow established
+- [x] Progress tracking system created
+- [x] Screenshots documented
+- [x] Infrastructure setup committed to GitHub
 
-- [ ] Cloudflare Tunnel setup
-- [ ] Remote webhook testing
-- [ ] Production environment variables
-- [ ] Client demo deployment
+---
+
+# Planned Future Integrations
+
+- Telegram Bot integration
+- OpenAI API integration
+- Google Calendar integration
+- AI workflow orchestration
+- Cloudflare Tunnel setup
+- Remote webhook testing
+- Client demo deployment
+
+---
+
+# Author
+
+Created by Juzantino Junadi
